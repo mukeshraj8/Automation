@@ -173,4 +173,5 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-*.csv
+.\JobAgentBotV2\project_root\*.csv
+.\JobAgentBotV2\project_root\output

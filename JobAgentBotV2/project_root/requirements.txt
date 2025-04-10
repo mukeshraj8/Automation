@@ -1,0 +1,30 @@
+# Email fetching and parsing
+imapclient
+pyzmail36
+beautifulsoup4
+lxml
+
+# Configuration
+python-dotenv
+PyYAML
+
+# Data handling
+pandas
+
+# Document generation
+python-docx
+
+# Web automation (future use if needed)
+selenium
+
+# AI/ML API integration (future use if needed)
+openai
+
+# Web app development (future use if needed)
+streamlit
+
+# (Optional) Progress bar for better CLI experience
+tqdm
+
+# when you want to use .env files, you need python-dotenv.
+dotenv
