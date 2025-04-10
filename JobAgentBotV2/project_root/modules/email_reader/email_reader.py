@@ -17,10 +17,6 @@ load_dotenv()
 
 # Setup logging
 logger = get_logger(__name__)
-logger.info("=== This is a test log entry ===")
-logger.error("=== This is a test log entry ===")
-logger.debug("=== This is a test log entry ===")
-
 
 # Global settings
 EMAIL_USER = os.getenv("EMAIL_USER")
@@ -31,10 +27,10 @@ CHECKPOINT_FILE = "checkpoint.txt"
 OUTPUT_DIR = "output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-print(f"EMAIL_USER: {EMAIL_USER}")
-print(f"EMAIL_PASS: {EMAIL_PASS}")
-print(f"IMAP_SERVER: {IMAP_SERVER}")
-print(f"MAILBOX: {MAILBOX}")
+# print(f"EMAIL_USER: {EMAIL_USER}")
+# print(f"EMAIL_PASS: {EMAIL_PASS}")
+# print(f"IMAP_SERVER: {IMAP_SERVER}")
+# print(f"MAILBOX: {MAILBOX}")
 
 
 # Global variables
@@ -153,19 +149,16 @@ def main():
 
     mail.logout()
 
-if __name__ == "__main__":
-    main()
-
 # # ----------------------------
 # # Entry Point
 # # ----------------------------
 
-# if __name__ == "__main__":
-#     try:
-#         process_emails()
-#     except KeyboardInterrupt:
-#         logging.warning("KeyboardInterrupt detected. Exiting gracefully...")
-#         sys.exit(0)
-#     except Exception as e:
-#         logging.error(f"Unexpected error: {e}")
-#         sys.exit(1)
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        logger.warning("KeyboardInterrupt detected. Exiting gracefully...")
+        sys.exit(0)
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        sys.exit(1)
