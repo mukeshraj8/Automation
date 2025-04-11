@@ -1,31 +1,62 @@
-# === Python build/cache files ===
+# ====================
+# Byte-compiled / cache files
+# ====================
 **/__pycache__/
 **/*.py[cod]
 **/*.pyo
 **/*.pyd
 
-# === Virtual environments ===
+# ====================
+# Virtual environments
+# ====================
+**/env/
+**/.env/
 **/venv/
 **/.venv/
-**/env/
 **/ENV/
 
-# === Logs and debug files ===
+# ====================
+# Log files and debugging output
+# ====================
 *.log
 *.txt
-*.env
 *.bak
 *.tmp
 *.swp
 
-# === Output folders ===
+# ====================
+# Test output
+# ====================
 **/output/
-**/dist/
-**/build/
+**/logs/
+**/coverage/
+**/htmlcov/
 
-# === VSCode / PyCharm / IDE folders ===
+# ====================
+# Environment/config files
+# ====================
+*.env
+.env.*
+
+# ====================
+# IDE/editor config
+# ====================
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
 
-# === Ignore all .egg-info and metadata ===
+# ====================
+# macOS / Windows / Linux OS files
+# ====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ====================
+# Distribution / packaging
+# ====================
+**/build/
+**/dist/
 *.egg-info/
+.eggs/
