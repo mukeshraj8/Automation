@@ -1,0 +1,31 @@
+# === Python build/cache files ===
+**/__pycache__/
+**/*.py[cod]
+**/*.pyo
+**/*.pyd
+
+# === Virtual environments ===
+**/venv/
+**/.venv/
+**/env/
+**/ENV/
+
+# === Logs and debug files ===
+*.log
+*.txt
+*.env
+*.bak
+*.tmp
+*.swp
+
+# === Output folders ===
+**/output/
+**/dist/
+**/build/
+
+# === VSCode / PyCharm / IDE folders ===
+.vscode/
+.idea/
+
+# === Ignore all .egg-info and metadata ===
+*.egg-info/

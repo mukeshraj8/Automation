@@ -27,10 +27,10 @@ CHECKPOINT_FILE = "checkpoint.txt"
 OUTPUT_DIR = "output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# print(f"EMAIL_USER: {EMAIL_USER}")
-# print(f"EMAIL_PASS: {EMAIL_PASS}")
-# print(f"IMAP_SERVER: {IMAP_SERVER}")
-# print(f"MAILBOX: {MAILBOX}")
+print(f"EMAIL_USER: {EMAIL_USER}")
+#print(f"EMAIL_PASS: {EMAIL_PASS}")
+print(f"IMAP_SERVER: {IMAP_SERVER}")
+print(f"MAILBOX: {MAILBOX}")
 
 
 # Global variables
