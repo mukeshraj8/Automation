@@ -1,5 +1,5 @@
-from core import config_loader
-
+from project_root.core.utils import config_loader
+print("Script has started.")
 def main():
     # Fetch a few config values
     email_user = config_loader.get_config('EMAIL_USER')

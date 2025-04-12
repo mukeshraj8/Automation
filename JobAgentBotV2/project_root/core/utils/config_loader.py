@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-
+print("Script has started.")
 # Get project root directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

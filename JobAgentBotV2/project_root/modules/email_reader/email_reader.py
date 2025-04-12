@@ -15,7 +15,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 # Load environment variables
 load_dotenv()
 
-# Setup logging
+# Setup loggingcd pro   
 logger = get_logger(__name__)
 
 # Global settings
