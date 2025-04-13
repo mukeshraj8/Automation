@@ -1,0 +1,20 @@
+{
+    "rules": [
+        {
+            "name": "Test Rule",
+            "conditions": [
+                {
+                    "field": "sender",
+                    "value": "test@domain.com",
+                    "operator": "equals"
+                }
+            ],
+            "actions": [
+                {
+                    "action": "move_to_folder",
+                    "folder": "TestFolder"
+                }
+            ]
+        }
+    ]
+}

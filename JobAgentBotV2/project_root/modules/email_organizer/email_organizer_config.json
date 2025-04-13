@@ -1,0 +1,46 @@
+{
+    "rules": [
+      {
+        "id": "rule1",
+        "description": "Move important job portal emails",
+        "priority": 1,
+        "condition_logic": "AND",
+        "conditions": [
+          { "field": "subject", "operation": "contains", "value": "Job Alert" },
+          { "field": "from", "operation": "contains", "value": "noreply@jobportal.com" }
+        ],
+        "action": {
+          "type": "move_to_folder",
+          "target": "JobAlerts"
+        }
+      },
+      {
+        "id": "rule2",
+        "description": "Mark promotional emails",
+        "priority": 2,
+        "condition_logic": "OR",
+        "conditions": [
+          { "field": "subject", "operation": "contains", "value": "Sale" },
+          { "field": "from", "operation": "contains", "value": "promotions@" }
+        ],
+        "action": {
+          "type": "move_to_folder",
+          "target": "Promotions"
+        }
+      },
+      {
+        "id": "rule3",
+        "description": "Use AI scoring for suspicious emails",
+        "priority": 5,
+        "condition_logic": "AND",
+        "conditions": [
+          { "field": "subject", "operation": "matches_regex", "value": ".*urgent.*" }
+        ],
+        "action": {
+          "type": "mark_as_suspicious",
+          "use_scoring_model": true
+        }
+      }
+    ]
+  }
+  
