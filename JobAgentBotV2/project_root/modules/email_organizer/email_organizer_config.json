@@ -7,7 +7,7 @@
         "condition_logic": "AND",
         "conditions": [
           { "field": "subject", "operation": "contains", "value": "Job Alert" },
-          { "field": "from", "operation": "contains", "value": "noreply@jobportal.com" }
+          { "field": "from", "operation": "ends_with", "value": "@jobportal.com" }
         ],
         "action": {
           "type": "move_to_folder",
@@ -16,31 +16,56 @@
       },
       {
         "id": "rule2",
-        "description": "Mark promotional emails",
+        "description": "Mark promotional emails or from specific senders",
         "priority": 2,
         "condition_logic": "OR",
         "conditions": [
           { "field": "subject", "operation": "contains", "value": "Sale" },
-          { "field": "from", "operation": "contains", "value": "promotions@" }
+          { "field": "from", "operation": "starts_with", "value": "promotions@" },
+          { "field": "from", "operation": "in", "value": ["newsletter@companyA.com", "offers@companyB.net"] }
         ],
         "action": {
-          "type": "move_to_folder",
-          "target": "Promotions"
+          "type": "add_category",
+          "category_name": "Promotional"
         }
       },
       {
         "id": "rule3",
-        "description": "Use AI scoring for suspicious emails",
+        "description": "Use AI scoring for urgent-sounding emails and mark as suspicious",
         "priority": 5,
         "condition_logic": "AND",
         "conditions": [
-          { "field": "subject", "operation": "matches_regex", "value": ".*urgent.*" }
+          { "field": "subject", "operation": "matches_regex", "value": ".*(urgent|important|critical).*" }
         ],
         "action": {
           "type": "mark_as_suspicious",
           "use_scoring_model": true
         }
+      },
+      {
+        "id": "rule4",
+        "description": "Delete very large emails",
+        "priority": 6,
+        "condition_logic": "AND",
+        "conditions": [
+          { "field": "size", "operation": "greater_than", "value": 1000000 } // Size in bytes
+        ],
+        "action": {
+          "type": "delete"
+        }
+      },
+      {
+        "id": "rule5",
+        "description": "Stop processing for emails from known contacts",
+        "priority": 0,
+        "condition_logic": "OR",
+        "conditions": [
+          { "field": "from", "operation": "contains", "value": "friend@example.com" },
+          { "field": "from", "operation": "contains", "value": "family@example.com" }
+        ],
+        "action": {
+          "type": "stop_processing"
+        }
       }
     ]
   }
-  
