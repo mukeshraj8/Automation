@@ -1,15 +1,15 @@
-# modules/email_organizer/rule_engine.py
-
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 import operator
 import re  # For regular expression matching
+from core.utils.logger_config import get_logger
+
+# Initialize logger
+logger = get_logger(__name__)
 
 class RuleEngine:
     """
     A class responsible for evaluating email data against a set of refined rules
     defined in a JSON structure and determining the actions to be taken.
-    It supports a wide range of condition operators, logical combinations,
-    and action types.
     """
     def __init__(self, rules_json: Dict[str, Any], use_ml_model: bool = False, model: Any = None):
         """
@@ -19,7 +19,7 @@ class RuleEngine:
         Args:
             rules_json (Dict[str, Any]): A dictionary loaded from the JSON rule file.
             use_ml_model (bool, optional): A flag indicating whether to use a machine
-                                           learning model for evaluation. Defaults to False.
+                                            learning model for evaluation. Defaults to False.
             model (Any, optional): The loaded machine learning model object. Defaults to None.
         """
         self.rules = rules_json.get("rules", [])
@@ -37,12 +37,12 @@ class RuleEngine:
             "less_than": operator.lt,
             "greater_than_or_equal": operator.ge,
             "less_than_or_equal": operator.le,
-            "is_empty": lambda a, b: not a,  # b is ignored
-            "is_not_empty": lambda a, b: bool(a), # b is ignored
+            "is_empty": lambda a, _: not a,  # _ is ignored
+            "is_not_empty": lambda a, _: bool(a),  # _ is ignored
             "in": lambda a, b: a.lower() in [item.lower() for item in b] if isinstance(b, list) and isinstance(a, str) else (a in b if isinstance(b, list) else False),
             "not_in": lambda a, b: a.lower() not in [item.lower() for item in b] if isinstance(b, list) and isinstance(a, str) else (a not in b if isinstance(b, list) else True)
-            
         }
+
     def evaluate(self, email_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
         Evaluates the given email data against the loaded rules and returns a list of actions
@@ -53,8 +53,9 @@ class RuleEngine:
             email_data (Dict[str, Any]): A dictionary containing the email attributes.
 
         Returns:
-            List[Dict[str, Any]]: A list of action dictionaries to be performed on the email,
-                                 ordered by the priority of the matching rule.
+            List[Dict[str, Any]]: A list of dictionaries, where each dictionary contains
+                                    "priority" and "action" for matching rules,
+                                    ordered by priority.
         """
         matching_actions = []
         stop_processing = False
@@ -63,7 +64,7 @@ class RuleEngine:
             if stop_processing:
                 break
 
-            if self._evaluate_rule(rule, email_data):
+            if self.evaluate_rule(rule, email_data):  # Corrected method call
                 action = rule.get("action")
                 if action:
                     matching_actions.append({
@@ -76,9 +77,9 @@ class RuleEngine:
         # Sort actions by priority (lower is higher)
         matching_actions.sort(key=lambda item: item["priority"])
 
-        return [item["action"] for item in matching_actions]
+        return matching_actions  # Return the list of dictionaries
 
-    def _evaluate_rule(self, rule: Dict[str, Any], email_data: Dict[str, Any]) -> bool:
+    def evaluate_rule(self, rule: Dict[str, Any], email_data: Dict[str, Any]) -> bool:
         """
         Evaluates a single rule against the given email data. It checks the conditions
         defined in the rule and returns True if the rule matches, False otherwise,
@@ -103,33 +104,35 @@ class RuleEngine:
             operation = condition.get("operation")
             value = condition.get("value")
 
-            print(f"Evaluating condition: field='{field}', operation='{operation}', value='{value}'")
+            logger.info(f"Evaluating condition: field='{field}', operation='{operation}', value='{value}'")
 
             if field and operation and field in email_data:
                 field_value = email_data[field]
                 op_func = self.operators.get(operation)
                 if op_func:
                     result = op_func(field_value, value)
-                    print(f"  Field Value: '{field_value}', Result: {result}")
+                    logger.info(f"  Field Value: '{field_value}', Result: {result}")
                     results.append(result)
                 else:
-                    print(f"Warning: Unknown operation '{operation}' in rule '{rule.get('id')}'")
+                    logger.warning(f"Unknown operation '{operation}' in rule '{rule.get('id')}'")
                     results.append(False)
             else:
                 results.append(False)
 
-        print(f"Condition results: {results}, Logic: {logic}")
+        logger.info(f"Condition results: {results}, Logic: {logic}")
 
         if logic == "AND":
             final_result = all(results)
         elif logic == "OR":
             final_result = any(results)
         else:
-            print(f"Warning: Unknown condition logic '{logic}' in rule '{rule.get('id')}'. Assuming AND.")
+            logger.warning(f"Unknown condition logic '{logic}' in rule '{rule.get('id')}'. Assuming AND.")
             final_result = all(results)
 
-        print(f"Final rule result: {final_result}")
+        logger.info(f"Final rule result: {final_result}")
         return final_result
+    
+
     # ML-based scoring would be integrated here within the evaluate method
     # if use_ml_model is True and self.model is available.
     # The logic for how ML scores influence actions would need to be defined.

@@ -1,7 +1,6 @@
 import logging
 import os
 from logging.handlers import RotatingFileHandler
-from core.utils import config_loader
 from dotenv import load_dotenv, find_dotenv
 
 # # Now safely read LOG_PATH
