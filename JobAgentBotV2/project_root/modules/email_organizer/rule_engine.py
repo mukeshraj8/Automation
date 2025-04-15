@@ -40,8 +40,8 @@ class RuleEngine:
             "is_empty": lambda a, b: not a,  # b is ignored
             "is_not_empty": lambda a, b: bool(a), # b is ignored
             "in": lambda a, b: a.lower() in [item.lower() for item in b] if isinstance(b, list) and isinstance(a, str) else (a in b if isinstance(b, list) else False),
-            "not_in": lambda a, b: a.lower() not in [item.lower() for item in b] if isinstance(b, list) and isinstance(a, str) else (a not in b if isinstance(b, list) else True),
-            "equals": operator.eq
+            "not_in": lambda a, b: a.lower() not in [item.lower() for item in b] if isinstance(b, list) and isinstance(a, str) else (a not in b if isinstance(b, list) else True)
+            
         }
     def evaluate(self, email_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
