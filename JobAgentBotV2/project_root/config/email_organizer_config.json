@@ -1,0 +1,11 @@
+{
+    "rules": [
+        {
+            "name": "Example Rule",
+            "condition": "subject contains 'example'",
+            "actions": [
+                "move to folder 'ExampleFolder'"
+            ]
+        }
+    ]
+}

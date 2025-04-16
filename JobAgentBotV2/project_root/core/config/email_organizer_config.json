@@ -1,0 +1,44 @@
+{
+  "rules": [
+      {
+          "name": "Order Confirmations",
+          "condition": "subject contains 'Order Confirmation' AND body contains 'Order Number:'",
+          "actions": ["move to folder 'Orders'", "mark as read", "add label 'Confirmation'"]
+      },
+      {
+          "name": "Shipping Updates",
+          "condition": "subject contains 'Shipping Update' AND body contains 'Tracking Number:'",
+          "actions": ["move to folder 'Orders'", "add label 'Shipping'"]
+      },
+      {
+          "name": "Password Reset Requests",
+          "condition": "subject contains 'Password Reset' OR body contains 'password reset link'",
+          "actions": ["move to folder 'Security'", "mark as read", "add label 'Important'"]
+      },
+      {
+          "name": "Newsletters from Specific Sender",
+          "condition": "from == 'newsletter@example.com' AND subject contains 'Weekly Update'",
+          "actions": ["move to folder 'Newsletters'"]
+      },
+      {
+          "name": "Meeting Invitations",
+          "condition": "body contains 'Invitation:' AND body contains 'Time:' AND body contains 'Location:'",
+          "actions": ["move to folder 'Calendar'", "add label 'Meeting'"]
+      },
+      {
+          "name": "Bank Statements",
+          "condition": "subject contains 'Bank Statement' OR body contains 'Account Summary'",
+          "actions": ["move to folder 'Finance'", "add label 'Statement'"]
+      },
+      {
+          "name": "Promotions with Discount",
+          "condition": "subject contains 'Special Offer' AND body contains '% off'",
+          "actions": ["move to folder 'Promotions'", "add label 'Discount'"]
+      },
+      {
+          "name": "All Other Mails",
+          "condition": "True",
+          "actions": ["move to folder 'Inbox'"]
+      }
+  ]
+}
